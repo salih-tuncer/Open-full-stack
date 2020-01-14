@@ -1,14 +1,19 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 
-const Display = ({ counter, text }) => <div><b>{text}:</b>{counter}</div> ;
-const Button =({onClick, text}) => <button onClick={onClick}>{text}</button>;
-
-
+//const Display = ({ counter, text }) => <div><b>{text}:</b>{counter}</div> ;
+//const Button =({onClick, text}) => <button onClick={onClick}>{text}</button>;
+/*const History =({allClicks, text})=>{
+if(allClicks.length==0){
+return  <h1><b>{text}:</b>Never Clicked</h1>;}
+  return  <h1><b>{text}:</b>Clicked {allClicks.length} times!</h1>
+}
+*/
 const App = (props) => {
   const [feedback, setFeedback] = useState({
       good: 0, neutral: 0, bad:0
     })
+
 
 const clickGood = ()=>{
 setFeedback({
@@ -16,6 +21,7 @@ setFeedback({
   neutral:feedback.neutral,
   bad:feedback.bad
 })
+
 }
 const clickNeutral = ()=>{
 setFeedback({
@@ -23,6 +29,7 @@ setFeedback({
   neutral:feedback.neutral+1,
   bad:feedback.bad
 })
+
 }
 const clickBad = ()=>{
 setFeedback({
@@ -30,6 +37,7 @@ setFeedback({
   neutral:feedback.neutral,
   bad:feedback.bad+1
 })
+
 }
 
 
@@ -37,13 +45,17 @@ setFeedback({
     <div>
       <h1> Give Feedack!</h1>
       <br/>
-      <Button onClick={clickGood} text={'Good'}/>
-      <Button onClick={clickNeutral} text={'Neutral'}/>
-      <Button onClick={clickBad} text={'Bad'}/>
+      <button onClick={clickGood}> Good</button>
+      <button onClick={clickNeutral}> Neutral</button>
+      <button onClick={clickBad}> Bad</button>
       <h1> Statistics </h1>
-     <Display counter={feedback.good} text={'Good'} ></Display >
-     <Display counter={feedback.neutral} text={'Neutral'}></Display >
-     <Display counter={feedback.bad} text={'Bad'}></Display >
+     <p>
+     Good: {feedback.good}<br/>
+     Neutral:{feedback.neutral}<br/>
+     Bad: {feedback.bad}<br/>
+
+     </p>
+
 
     </div>
   )
