@@ -1,0 +1,78 @@
+import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
+
+
+const Statistics = ({feedback, stats}) => {
+
+    return (     <p>
+         Good: {feedback.good}<br/>
+         Neutral:{feedback.neutral}<br/>
+         Bad: {feedback.bad}<br/>
+         All: {stats.all}<br/>
+         Average: {stats.ave}<br/>
+         Positive: {stats.positive+'%'}
+         </p>)
+}
+
+const App = (props) => {
+  const [feedback, setFeedback] = useState({
+      good: 0, neutral: 0, bad:0
+    })
+  const [stats, setStats] = useState({
+        all: 0, ave: 0, positive:0
+      })
+
+const clickGood = ()=>{
+setFeedback({
+  good:feedback.good+1,
+  neutral:feedback.neutral,
+  bad:feedback.bad
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad+1)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+const clickNeutral = ()=>{
+setFeedback({
+  good:feedback.good,
+  neutral:feedback.neutral+1,
+  bad:feedback.bad
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+const clickBad = ()=>{
+setFeedback({
+  good:feedback.good,
+  neutral:feedback.neutral,
+  bad:feedback.bad+1
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad+1)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+
+
+  return (
+    <div>
+      <h1> Give Feedack!</h1>
+      <br/>
+      <button onClick={clickGood}> Good</button>
+      <button onClick={clickNeutral}> Neutral</button>
+      <button onClick={clickBad}> Bad</button>
+      <h1> Statistics </h1>
+     <Statistics feedback={feedback} stats={stats} > </Statistics>
+
+    </div>
+  )
+}
+
+ReactDOM.render(<App />,
+document.getElementById('root'))
