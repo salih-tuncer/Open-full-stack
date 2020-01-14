@@ -1,0 +1,72 @@
+import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
+
+const Display = ({ counter, text }) => <div><b>{text}:</b>{counter}</div> ;
+const Button =({onClick, text}) => <button onClick={onClick}>{text}</button>;
+
+const App = (props) => {
+  const [feedback, setFeedback] = useState({
+      good: 0, neutral: 0, bad:0
+    })
+  const [stats, setStats] = useState({
+        all: 0, ave: 0, positive:0
+      })
+
+const clickGood = ()=>{
+setFeedback({
+  good:feedback.good+1,
+  neutral:feedback.neutral,
+  bad:feedback.bad
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad+1)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+const clickNeutral = ()=>{
+setFeedback({
+  good:feedback.good,
+  neutral:feedback.neutral+1,
+  bad:feedback.bad
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+const clickBad = ()=>{
+setFeedback({
+  good:feedback.good,
+  neutral:feedback.neutral,
+  bad:feedback.bad+1
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad+1)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+
+
+  return (
+    <div>
+      <h1> Give Feedack!</h1>
+      <br/>
+      <Button onClick={clickGood} text={'Good'}/>
+      <Button onClick={clickNeutral} text={'Neutral'}/>
+      <Button onClick={clickBad} text={'Bad'}/>
+      <h1> Statistics </h1>
+     <Display counter={feedback.good} text={'Good'} ></Display >
+     <Display counter={feedback.neutral} text={'Neutral'}></Display >
+     <Display counter={feedback.bad} text={'Bad'}></Display >
+     <Display counter={stats.all} text={'All'} ></Display >
+     <Display counter={stats.ave} text={'Average'}></Display >
+     <Display counter={stats.positive+'%'} text={'Positive'}></Display >
+    </div>
+  )
+}
+
+ReactDOM.render(<App />,
+document.getElementById('root'))
