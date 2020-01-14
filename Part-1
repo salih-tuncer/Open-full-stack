@@ -1,0 +1,53 @@
+import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
+
+const Display = ({ counter, text }) => <div><b>{text}:</b>{counter}</div> ;
+const Button =({onClick, text}) => <button onClick={onClick}>{text}</button>;
+
+
+const App = (props) => {
+  const [feedback, setFeedback] = useState({
+      good: 0, neutral: 0, bad:0
+    })
+
+const clickGood = ()=>{
+setFeedback({
+  good:feedback.good+1,
+  neutral:feedback.neutral,
+  bad:feedback.bad
+})
+}
+const clickNeutral = ()=>{
+setFeedback({
+  good:feedback.good,
+  neutral:feedback.neutral+1,
+  bad:feedback.bad
+})
+}
+const clickBad = ()=>{
+setFeedback({
+  good:feedback.good,
+  neutral:feedback.neutral,
+  bad:feedback.bad+1
+})
+}
+
+
+  return (
+    <div>
+      <h1> Give Feedack!</h1>
+      <br/>
+      <Button onClick={clickGood} text={'Good'}/>
+      <Button onClick={clickNeutral} text={'Neutral'}/>
+      <Button onClick={clickBad} text={'Bad'}/>
+      <h1> Statistics </h1>
+     <Display counter={feedback.good} text={'Good'} ></Display >
+     <Display counter={feedback.neutral} text={'Neutral'}></Display >
+     <Display counter={feedback.bad} text={'Bad'}></Display >
+
+    </div>
+  )
+}
+
+ReactDOM.render(<App />,
+document.getElementById('root'))
