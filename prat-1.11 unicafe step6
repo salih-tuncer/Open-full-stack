@@ -1,0 +1,82 @@
+import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
+
+const Button =({onClick, text}) => <button onClick={onClick}>{text}</button>;
+
+const Statistics = ({feedback, stats}) => {
+if(stats.all==0){
+  return<p>No feedback given</p>
+}
+return (<table>
+        <tr><td>Good:</td> <td> {feedback.good}</td></tr>
+        <tr><td> Neutral:</td> <td>{feedback.neutral} </td></tr>
+        <tr><td>Bad:</td> <td> {feedback.bad}</td></tr>
+        <tr><td>All: </td> <td>{stats.all}</td></tr>
+        <tr><td>Average:</td> <td> {stats.ave}</td></tr>
+        <tr><td>Positive:</td> <td> {stats.positive+'%'}</td></tr>
+        </table>
+       )
+}
+
+const App = (props) => {
+  const [feedback, setFeedback] = useState({
+      good: 0, neutral: 0, bad:0
+    })
+  const [stats, setStats] = useState({
+        all: 0, ave: 0, positive:0
+      })
+
+const clickGood = ()=>{
+setFeedback({
+  good:feedback.good+1,
+  neutral:feedback.neutral,
+  bad:feedback.bad
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad+1)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+const clickNeutral = ()=>{
+setFeedback({
+  good:feedback.good,
+  neutral:feedback.neutral+1,
+  bad:feedback.bad
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+const clickBad = ()=>{
+setFeedback({
+  good:feedback.good,
+  neutral:feedback.neutral,
+  bad:feedback.bad+1
+})
+setStats({
+  all: feedback.good+feedback.neutral+feedback.bad+1,
+  ave: (feedback.good+feedback.bad+1)/2,
+  positive:feedback.good/(feedback.good+feedback.neutral+feedback.bad+1)*100
+})
+}
+
+
+  return (
+    <div>
+      <h1> Give Feedack!</h1>
+      <br/>
+
+      <Button onClick={clickGood} text={'Good'}/>
+      <Button onClick={clickNeutral} text={'Neutral'}/>
+      <Button onClick={clickBad} text={'Bad'}/>
+      <h1> Statistics </h1>
+     <Statistics feedback={feedback} stats={stats} > </Statistics>
+
+    </div>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
