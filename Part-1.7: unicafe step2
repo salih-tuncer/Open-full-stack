@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 
-const Display = ({ counter, text }) => <div><b>{text}:</b>{counter}</div> ;
-const Button =({onClick, text}) => <button onClick={onClick}>{text}</button>;
 
 const App = (props) => {
   const [feedback, setFeedback] = useState({
@@ -54,19 +52,35 @@ setStats({
     <div>
       <h1> Give Feedack!</h1>
       <br/>
-      <Button onClick={clickGood} text={'Good'}/>
-      <Button onClick={clickNeutral} text={'Neutral'}/>
-      <Button onClick={clickBad} text={'Bad'}/>
+      <button onClick={clickGood}> Good</button>
+      <button onClick={clickNeutral}> Neutral</button>
+      <button onClick={clickBad}> Bad</button>
       <h1> Statistics </h1>
-     <Display counter={feedback.good} text={'Good'} ></Display >
-     <Display counter={feedback.neutral} text={'Neutral'}></Display >
-     <Display counter={feedback.bad} text={'Bad'}></Display >
-     <Display counter={stats.all} text={'All'} ></Display >
-     <Display counter={stats.ave} text={'Average'}></Display >
-     <Display counter={stats.positive+'%'} text={'Positive'}></Display >
+     <p>
+     Good: {feedback.good}<br/>
+     Neutral:{feedback.neutral}<br/>
+     Bad: {feedback.bad}<br/>
+     All: {stats.all}<br/>
+     Average: {stats.ave}<br/>
+     Positive: {stats.positive+'%'}
+     </p>
+
+
     </div>
   )
 }
 
 ReactDOM.render(<App />,
 document.getElementById('root'))
+
+
+
+
+
+
+
+//ReactDOM.render(<App />, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
